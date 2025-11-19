@@ -5,6 +5,7 @@ module.exports = (client) => {
     if (!client) throw new Error('A Discord client instance is required');
 
     const commandsPath = path.join(__dirname, '..', 'commands');
+    const slashCommands = [];
     const rootFiles = fs.readdirSync(commandsPath).filter(f => f.endsWith('.js'));
 
     for (const file of rootFiles) {
@@ -17,6 +18,7 @@ module.exports = (client) => {
         }
 
         client.commands.set(command.name, command);
+        if (command.data) slashCommands.push(command.data.toJSON());
         console.log(`Loaded command: ${command.name}`);
     }
 
@@ -36,9 +38,15 @@ module.exports = (client) => {
             }
 
             client.commands.set(command.name, command);
+            if (command.data) slashCommands.push(command.data.toJSON());
             console.log(`Loaded command: ${command.name} from category: ${category}`);
         }
     }
+
+    client.once('ready', () => {
+        client.application.commands.set(slashCommands);
+        console.log(`Registered ${slashCommands.length} slash commands`);
+    });
 
     client.commandHandler = (commandName, ...args) => {
         const command = client.commands.get(commandName);
