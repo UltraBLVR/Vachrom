@@ -12,11 +12,14 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@discordjs/voice": "^0.16.0",
+    "axios": "^1.13.2",
     "discord.js": "^14.25.0",
     "dotenv": "^17.2.3",
-    "@discordjs/voice": "^0.16.0",
-    "ytdl-core": "^4.11.5",
-    "play-dl": "^1.9.7"
+    "lastfm": "^0.9.4",
+    "play-dl": "^1.9.7",
+    "spotify-web-api-node": "^5.0.2",
+    "ytdl-core": "^4.11.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"

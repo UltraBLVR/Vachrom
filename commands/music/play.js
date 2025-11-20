@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
 const play = require('play-dl');
+const lastfm = require('../../utils/lastfm');
 
 module.exports = {
     name: 'play',
@@ -31,14 +32,19 @@ module.exports = {
             });
 
             let stream;
+            let trackInfo = { title: 'Unknown', author: 'Unknown' };
+
             if (query.includes('youtube.com') || query.includes('youtu.be')) {
                 stream = await play.stream(query);
+                const videoInfo = await play.video_info(query);
+                trackInfo = { title: videoInfo.video_details.title, author: videoInfo.video_details.channel.name };
             } else {
                 const searched = await play.search(query, { limit: 1 });
                 if (!searched[0]) {
                     return interaction.editReply('No results found!');
                 }
                 stream = await play.stream(searched[0].url);
+                trackInfo = { title: searched[0].title, author: searched[0].channel.name };
             }
 
             const resource = createAudioResource(stream.stream, {
@@ -50,10 +56,15 @@ module.exports = {
             connection.subscribe(player);
 
             player.on(AudioPlayerStatus.Playing, () => {
-                interaction.editReply('🎵 Now playing!');
+                interaction.editReply(`🎵 Now playing: **${trackInfo.title}**`);
             });
 
             player.on(AudioPlayerStatus.Idle, () => {
+                if (process.env.LASTFM_API_KEY && interaction.user.username) {
+                    lastfm.scrobbleTrack(interaction.user.username, trackInfo.title, trackInfo.author).catch(err => {
+                        console.error('Failed to scrobble track:', err);
+                    });
+                }
                 connection.destroy();
             });
 
