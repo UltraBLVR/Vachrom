@@ -1,0 +1,29 @@
+{
+  "name": "vachrom",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UltraBLVR/Vachrom.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/UltraBLVR/Vachrom/issues"
+  },
+  "homepage": "https://github.com/UltraBLVR/Vachrom#readme",
+  "dependencies": {
+    "discord.js": "^14.25.1",
+    "dotenv": "^17.3.1",
+    "fs": "^0.0.1-security",
+    "nodemon": "^3.1.14",
+    "path": "^0.12.7",
+    "pm2": "^6.0.14"
+  }
+}
