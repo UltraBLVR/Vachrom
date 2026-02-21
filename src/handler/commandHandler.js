@@ -1,3 +1,4 @@
+const log = require('../util/logger')
 const fs   = require('fs');
 const path = require('path');
 
@@ -19,7 +20,7 @@ module.exports = (client) => {
       }
 
       client.commands.set(command.data.name, command);
-      logger.green(`[CMD] Loaded: ${command.data.name}`);
+      log.cmd(` Loaded: ${command.data.name}`);
     }
   }
 };
