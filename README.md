@@ -8,4 +8,7 @@ Vachrom team will try their best to insure that discord users will get the best 
 
 ### Developer Guide
 
-Vachrom uses an **interactive interface** that gives you some commands that you can input in the **terminal**
+Vachrom uses an **interactive interface** that gives you some commands that you can input in the **terminal**, these inputs are available when you launch the bot.
+
+Available commands:
+`help` `stop` `restart` `stats`
