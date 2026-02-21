@@ -1,10 +1,9 @@
-const log = require('../util/logger')
 const fs   = require('fs');
 const path = require('path');
+const log  = require('../util/logger');
 
 module.exports = (client) => {
   const basePath = path.join(__dirname, '../command');
-
   const categories = fs.readdirSync(basePath);
 
   for (const category of categories) {
@@ -15,12 +14,12 @@ module.exports = (client) => {
       const command = require(path.join(categoryPath, file));
 
       if (!command.data || !command.execute) {
-        console.warn(`[WARN] Skipping ${file} — missing data or execute`);
+        log.warn(`Skipping ${file} — missing data or execute`);
         continue;
       }
 
       client.commands.set(command.data.name, command);
-      log.cmd(` Loaded: ${command.data.name}`);
+      log.cmd(`Loaded: ${command.data.name}`);
     }
   }
 };
